@@ -1,3 +1,4 @@
 /node_modules/
 *.jpeg
 *.txt
+package-lock.json
