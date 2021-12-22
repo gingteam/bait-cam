@@ -2,3 +2,6 @@
 *.jpeg
 *.txt
 package-lock.json
+/vendor/
+composer.lock
+*.cache

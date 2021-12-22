@@ -1,18 +1,3 @@
-<?php
-
-if (isset($_POST['image'])) {
-
-    file_put_contents(
-        __DIR__.'/'.time().'.jpeg',
-        base64_decode(
-            preg_replace('#^data:image/\w+;base64,#i', '', $_POST['image'])
-        )
-    );
-
-    die(json_encode(['status' => 'success']));
-}
-
-?>
 <!doctype html>
 
 <html lang="en">

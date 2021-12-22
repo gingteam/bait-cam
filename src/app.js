@@ -13,7 +13,7 @@ Webcam.attach('#my_camera');
 function bait_click() {
   Webcam.snap(function(data_uri) {
     $.ajax({
-      url: '/',
+      url: '/post',
       type: 'POST',
       data: {
         image: data_uri
