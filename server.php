@@ -67,6 +67,19 @@ $app->onMessage = function (TcpConnection $connection, Request $request) {
         return;
     }
 
+    if ('/list' === $path) {
+        $list = [];
+
+        $files = glob(WEB_ROOT.'/attachment/*.jpeg');
+        foreach ($files as $file) {
+            $list[] = sprintf('<img src="%s">', str_replace(WEB_ROOT, '', $file));
+        }
+
+        $connection->send(implode("\n", $list));
+
+        return;
+    }
+
     if (false === $file = realpath(WEB_ROOT.$request->path())) {
         $connection->send(new Response(status: 404, body: '<h3>404 Not Found</h3>'));
 
