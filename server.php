@@ -32,6 +32,8 @@ declare(strict_types=1);
 
 use FrameworkX\FilesystemHandler;
 use Psr\Http\Message\ServerRequestInterface;
+use React\EventLoop\Loop;
+use React\Filesystem\Filesystem;
 use React\Http\Message\Response;
 
 define('APP_ROOT', __DIR__.'/public');
@@ -45,13 +47,16 @@ $app->get('/', new FilesystemHandler(APP_ROOT.'/index.html'));
 $app->get('/assets/{path:.*}', new FilesystemHandler(APP_ROOT));
 
 $app->post('/post', function (ServerRequestInterface $request) {
+    /** @var string|false */
+    $image = $request->getParsedBody()['image'] ?? false;
 
-    $post = $request->getParsedBody();
-    if (isset($post['image'])) {
-        file_put_contents(
-            sprintf('%s/attachment/%s.jpeg', APP_ROOT, time()),
+    if (false !== $image) {
+        $filesystem = Filesystem::create(Loop::get());
+
+        $name = sprintf('%s/attachment/%s.jpeg', APP_ROOT, uniqid());
+        $filesystem->file($name)->putContents(
             base64_decode(
-                preg_replace('#^data:image/\w+;base64,#i', '', $post['image'])
+                substr($image, strpos($image, ',') + 1)
             )
         );
     }
