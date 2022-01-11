@@ -1,6 +1,12 @@
 {
     "require": {
         "clue/framework-x": "dev-main",
-        "react/filesystem": "^0.1.2"
+        "react/filesystem": "^0.1.2",
+        "workerman/workerman": "^4.0"
+    },
+    "config": {
+        "allow-plugins": {
+            "wyrihaximus/composer-update-bin-autoload-path": true
+        }
     }
 }
